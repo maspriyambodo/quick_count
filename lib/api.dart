@@ -86,6 +86,8 @@ Future SubmitData(List users) async {
 }
 
 Future fetchPrecint() async {
+  List<Precint> code;
+
   final _storage = FlutterSecureStorage();
 
   String url =
@@ -93,7 +95,10 @@ Future fetchPrecint() async {
 
   Uri url2 = Uri.parse(url);
   var token = await _storage.read(key: 'token');
-
-  
-
+  final response = await http.get(
+    url2,
+    headers: {'Authorization': 'Bearer $token'},
+  );
+  var convertedDatatoJson = jsonDecode(response.body);
+  return convertedDatatoJson;
 }

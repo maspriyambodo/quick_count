@@ -3,11 +3,7 @@ class User {
   final String lastName;
   final int? boto;
 
-  const User({
-    required this.firstName,
-    required this.lastName,
-    this.boto
-  });
+  const User({required this.firstName, required this.lastName, this.boto});
 
   User copy({
     String? firstName,
@@ -31,4 +27,10 @@ class User {
 
   @override
   int get hashCode => firstName.hashCode ^ lastName.hashCode ^ boto.hashCode;
+}
+
+class Precint {
+  final String precint_code;
+
+  Precint({required this.precint_code});
 }
