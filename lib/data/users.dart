@@ -1,4 +1,3 @@
-
 import 'package:login_ui/model/user.dart';
 
 final allUsers = <User>[
@@ -12,5 +11,4 @@ final allUsers = <User>[
   User(firstName: 'Jose Jr', lastName: 'Montemayor', boto: 0),
   User(firstName: 'Manny Pacman', lastName: 'Pacquiao', boto: 0),
   User(firstName: 'Leni', lastName: 'Robredo', boto: 0),
-  
 ];

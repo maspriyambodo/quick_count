@@ -16,6 +16,7 @@ class EditablePage extends StatefulWidget {
 
 class _EditablePageState extends State<EditablePage> {
   late List<User> users;
+  List<dynamic> candidates = [];
 
   var _controller = ScrollController();
   var _isVisible = true;
@@ -24,6 +25,18 @@ class _EditablePageState extends State<EditablePage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      var rsp = await fetchCandidates();
+
+      for (var counter = 0; counter <= 10; counter++) {
+        setState(() {
+          candidates.add(rsp['data'][counter]);
+        });
+
+        print(candidates[counter]);
+      }
+    });
     this.users = List.of(allUsers);
   }
 
@@ -97,9 +110,24 @@ class _EditablePageState extends State<EditablePage> {
     final columns = ['First Name', 'Last Name', '# Votes'];
 
     return DataTable(
-      columns: getColumns(columns),
-      rows: getRows(users),
-    );
+        columns: getColumns(columns),
+        rows: candidates
+            .map(
+              (canditate) => DataRow(
+                cells: [
+                  DataCell(
+                    Text(canditate['name']),
+                  ),
+                  DataCell(
+                    Text(canditate['position']),
+                  ),
+                  DataCell(
+                    Text(canditate['level']),
+                  ),
+                ],
+              ),
+            )
+            .toList());
   }
 
   List<DataColumn> getColumns(List<String> columns) {

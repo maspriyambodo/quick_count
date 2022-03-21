@@ -4,6 +4,7 @@ import 'package:login_ui/api.dart';
 import 'package:login_ui/components/background.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:login_ui/elect.dart';
 import 'package:login_ui/home.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -131,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MyHomePage()));
+                                    builder: (context) => ElectRtn()));
                           } else {
                             setState(() => error = 'Please supply valid email');
                           }

@@ -85,13 +85,33 @@ Future SubmitData(List users) async {
   return;
 }
 
-Future fetchPrecint() async {
-  List<Precint> code;
-
+Future fetchPrecint(String precint_code) async {
   final _storage = FlutterSecureStorage();
 
   String url =
       'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/precints';
+
+  String sUrl = url + '/' + precint_code;
+  print(sUrl);
+
+  Uri url2 = Uri.parse(sUrl);
+  var token = await _storage.read(key: 'token');
+  final response = await http.get(
+    url2,
+    headers: {'Authorization': 'Bearer $token'},
+  );
+  final convertedDatatoJson = jsonDecode(response.body);
+  var mapping = Map<String, dynamic>.from(convertedDatatoJson);
+
+  print(mapping);
+  return mapping;
+}
+
+Future fetchCandidates() async {
+  final _storage = FlutterSecureStorage();
+
+  String url =
+      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/candidates';
 
   Uri url2 = Uri.parse(url);
   var token = await _storage.read(key: 'token');
@@ -99,6 +119,7 @@ Future fetchPrecint() async {
     url2,
     headers: {'Authorization': 'Bearer $token'},
   );
-  var convertedDatatoJson = jsonDecode(response.body);
+  final convertedDatatoJson = jsonDecode(response.body);
+
   return convertedDatatoJson;
 }

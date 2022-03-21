@@ -28,9 +28,3 @@ class User {
   @override
   int get hashCode => firstName.hashCode ^ lastName.hashCode ^ boto.hashCode;
 }
-
-class Precint {
-  final String precint_code;
-
-  Precint({required this.precint_code});
-}

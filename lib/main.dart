@@ -7,7 +7,7 @@ import 'package:login_ui/widget/connectivityAlert.dart';
 import 'package:provider/provider.dart';
 import 'Screens/login/login.dart';
 import 'wrapper.dart';
-import 'page/editable_page .dart';
+import 'page/editable_page.dart';
 
 void main() {
   runApp(MyApp());

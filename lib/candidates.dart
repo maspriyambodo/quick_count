@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_ui/widget/tabbar_widget.dart';
 import 'elect.dart';
-import 'page/editable_page .dart';
+import 'page/editable_page.dart';
 
 class VotesCnt extends StatefulWidget {
   // final Data data;

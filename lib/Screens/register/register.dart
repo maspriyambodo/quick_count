@@ -100,10 +100,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
                       controller: cpassController,
-                      validator: (String? val) =>
-                          val != passwordController.text && val!.isEmpty
-                              ? 'Password Did not Match'
-                              : null,
+                      validator: (String? val) => val != passwordController.text
+                          ? 'Password Did not Match'
+                          : null,
                       decoration:
                           InputDecoration(labelText: "Confirm Password"),
                       obscureText: true,
@@ -115,20 +114,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: RaisedButton(
                       onPressed: () async {
-                        // if (_formKey.currentState!.validate()) {
-                        //   var email = emailController.text;
-                        //   var name = nameController.text;
-                        //   var password = passwordController.text;
-                        //   var cpass = cpassController.text;
+                        if (_formKey.currentState!.validate()) {
+                          var email = emailController.text;
+                          var name = nameController.text;
+                          var password = passwordController.text;
+                          var cpass = cpassController.text;
 
-                        //   var rsp =
-                        //       await registerUser(email, password, cpass, name);
-                        //   print(rsp);
-                        // } else {
-
-                        // }
-                        var rsp = await fetchPrecint();
-                        print(rsp);
+                          var rsp =
+                              await registerUser(email, password, cpass, name);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        } else {
+                          print(error);
+                        }
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(80.0)),
