@@ -60,7 +60,7 @@ class _EditablePageState extends State<EditablePage> {
                 child: Text("Continue"),
                 onPressed: () async {
                   print(users);
-                  await SubmitData(users);
+                  // await SubmitData(users);
 
                   showDialog(
                       context: context,
@@ -107,7 +107,7 @@ class _EditablePageState extends State<EditablePage> {
       );
 
   Widget buildDataTable() {
-    final columns = ['First Name', 'Last Name', '# Votes'];
+    final columns = ['Name', '# Votes'];
 
     return DataTable(
         columns: getColumns(columns),
@@ -119,10 +119,9 @@ class _EditablePageState extends State<EditablePage> {
                     Text(canditate['name']),
                   ),
                   DataCell(
-                    Text(canditate['position']),
-                  ),
-                  DataCell(
-                    Text(canditate['level']),
+                    TextField(
+                      decoration: InputDecoration(labelText: ""),
+                    ),
                   ),
                 ],
               ),
@@ -132,7 +131,7 @@ class _EditablePageState extends State<EditablePage> {
 
   List<DataColumn> getColumns(List<String> columns) {
     return columns.map((String column) {
-      final isboto = column == columns[2];
+      final isboto = column == columns[1];
 
       return DataColumn(
         label: Text(column),

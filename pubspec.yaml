@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   flutter_secure_storage: ^5.0.2
   flutter_secure_storage_web: ^1.0.2
+  overlay_support: ^1.2.1
 
 
 dev_dependencies:

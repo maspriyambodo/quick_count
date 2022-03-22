@@ -44,7 +44,7 @@ Future registerUser(
   return convertedDatatoJson;
 }
 
-Future SubmitData(List users) async {
+Future SubmitData(List candidates, String? pos) async {
   // print(users);
   final _storage = FlutterSecureStorage();
   // String url = 'http://10.0.2.2/api/votes';
@@ -52,28 +52,28 @@ Future SubmitData(List users) async {
       'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/votes';
 
   Uri url2 = Uri.parse(url);
-  var nb = users.length;
+  var nb = candidates.length;
   var token = await _storage.read(key: 'token');
-  var precint = await _storage.read(key: 'precint');
-  var elpos = await _storage.read(key: 'position');
+  var precint = await _storage.read(key: 'pcode');
+  // var elpos = await _storage.read(key: 'position');
   String? level = "National";
   //print('Token : ${token}');
 
   for (var i = 0; i < nb; i++) {
-    String? fName = users[i].firstName;
-    String? lName = users[i].lastName;
-    var botos = users[i].boto.toString();
+    String? fName = candidates[i]['name'];
+    String? lName = "N/A";
+    var botos = candidates[i]['boto'].toString();
 
     final Map<String, dynamic> activityData = {
       "firstname": fName,
       "lastname": lName,
-      "elect_position": elpos,
+      "elect_position": pos,
       "level": level,
       "precint_code": precint,
       "nb_votes": botos
     };
 
-    if (users[i].boto > 0) {
+    if (candidates[i]['boto'] > 0) {
       final response = await http.post(url2,
           headers: {'Authorization': 'Bearer $token'}, body: activityData);
       var convertedDatatoJson = jsonDecode(response.body);

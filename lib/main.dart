@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'Screens/login/login.dart';
 import 'wrapper.dart';
 import 'page/editable_page.dart';
+import 'data/globalScaff.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Login',
+        scaffoldMessengerKey: snackbarKey,
         routes: {
           '/elect': (context) => ElectRtn(),
         },
