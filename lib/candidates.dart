@@ -231,6 +231,7 @@ class _VotesCntState extends State<VotesCnt> {
         rows: filtercandidates
             .map(
               (canditate) => DataRow(
+                
                 cells: [
                   DataCell(
                     ConstrainedBox(
