@@ -9,10 +9,13 @@ import 'package:login_ui/Screens/login/login.dart';
 import 'package:login_ui/candidates.dart';
 import 'package:login_ui/incident.dart';
 import 'package:login_ui/votes.dart';
+import 'package:login_ui/widget/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_ui/api.dart';
 import 'model/precint.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'data/globalScaff.dart';
 
 class ElectRtn extends StatefulWidget {
   // MyHomePage({Key key, this.title}) : super(key: key);
@@ -39,6 +42,8 @@ class _ElectRtnState extends State<ElectRtn> {
   final _formKey = GlobalKey<FormState>();
 
   bool _show = false;
+
+  bool loading = false;
 
   final precintController = TextEditingController();
 
@@ -79,143 +84,228 @@ class _ElectRtnState extends State<ElectRtn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Votes Registry'),
-      ),
-      body: Center(
-        child: Column(
-          //  mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(0.0),
-                      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 40),
-                      child: TextFormField(
-                        validator: (String? val) => val!.isEmpty ? 'Please enter password' : null,
-                        decoration: InputDecoration(labelText: "Precint"),
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                        textInputAction: TextInputAction.search,
-                        controller: precintController,
-                        onFieldSubmitted: (value) async {
-                          if (_formKey.currentState!.validate()) {
-                            await getData(precintController.text);
-                          }
-                        },
+    return loading
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Votes Registry'),
+              automaticallyImplyLeading: false,
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          loading = true;
+                        });
+                        await logoutUser();
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: Icon(
+                        Icons.logout,
+                        size: 26.0,
+                      ),
+                    )),
+              ],
+            ),
+            body: Center(
+              child: Column(
+                //  mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.all(0.0),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 40),
+                            child: TextFormField(
+                              validator: (String? val) =>
+                                  val!.isEmpty ? 'Please enter password' : null,
+                              decoration: InputDecoration(labelText: "Precint"),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              textInputAction: TextInputAction.search,
+                              controller: precintController,
+                              onFieldSubmitted: (value) async {
+                                var results =
+                                    await Connectivity().checkConnectivity();
+
+                                if (results == ConnectivityResult.none) {
+                                  final SnackBar snackBar = SnackBar(
+                                      content: Text(
+                                          "No Internet Connection Available"));
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(snackBar);
+                                } else {
+                                  if (_formKey.currentState!.validate()) {
+                                    await getData(precintController.text);
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            var results =
+                                await Connectivity().checkConnectivity();
+
+                            if (results == ConnectivityResult.none) {
+                              final SnackBar snackBar = SnackBar(
+                                  content:
+                                      Text("No Internet Connection Available"));
+                              snackbarKey.currentState?.showSnackBar(snackBar);
+                            } else {
+                              if (_formKey.currentState!.validate()) {
+                                await getData(precintController.text);
+                              }
+                            }
+                          },
+                          icon: const Icon(Icons.search),
+                        )
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      error,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 197, 7, 7),
+                          fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Precint Code: " + code,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Region: " + region,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Municipality: " + municipality,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Province: " + province,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Barangay: " + barangay,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Precint No: " + no,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Poll Place: " + place,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Registered Voters: $regvotes",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
+                    ),
+                  ),
+                  Visibility(
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    visible: _show,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60.0)),
+                        padding: const EdgeInsets.all(0),
+                      ),
+                      onPressed: () async {
+                        var results = await Connectivity().checkConnectivity();
+
+                        if (results == ConnectivityResult.none) {
+                          final SnackBar snackBar = SnackBar(
+                              content:
+                                  Text("No Internet Connection Available"));
+                          snackbarKey.currentState?.showSnackBar(snackBar);
+                        } else {
+                          setState(() {
+                            loading = true;
+                          });
+
+                          var pcode = code;
+                          await _storage.write(key: "pcode", value: pcode);
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => VotesCnt()),
+                            (Route<dynamic> route) => false,
+                          );
+                        }
+                      },
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await getData(precintController.text);
-                      }
-                    },
-                    icon: const Icon(Icons.search),
-                  )
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => IncedentReport()))
+                      },
+                      child: Text(
+                        "Submit an Incident Report?",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF2661FA)),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            Center(
-              child: Text(
-                error,
-                style: TextStyle(color: Color.fromARGB(255, 197, 7, 7), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Precint Code: " + code,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Region: " + region,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Municipality: " + municipality,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Province: " + province,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Barangay: " + barangay,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Precint No: " + no,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Poll Place: " + place,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Registered Voters: $regvotes",
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 14.0),
-              ),
-            ),
-            Visibility(
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              visible: _show,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60.0)),
-                  padding: const EdgeInsets.all(0),
-                ),
-                onPressed: () async {
-                  //final data = Data(text: "$_chosenValue");
-
-                  var pcode = code;
-                  await _storage.write(key: "pcode", value: pcode);
-
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => VotesCnt()));
-                },
-                child: Text(
-                  "Submit",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: GestureDetector(
-                onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => IncedentReport()))},
-                child: Text(
-                  "Submit an Incident Report?",
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF2661FA)),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }
 

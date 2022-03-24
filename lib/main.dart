@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'Screens/login/login.dart';
 import 'wrapper.dart';
 import 'page/editable_page.dart';
+import 'data/globalScaff.dart';
 
 
 void main() {
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       //     background: Container(color: Color(0xFFF5F5F5))),
       // initialRoute: "/",
         title: 'Flutter Login',
+        scaffoldMessengerKey: snackbarKey,
         routes: {
           '/elect': (context) => ElectRtn(),
         },

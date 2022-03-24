@@ -40,36 +40,58 @@ Future registerUser(String email, String password, String confirm_password, Stri
   return convertedDatatoJson;
 }
 
-Future SubmitData(List users) async {
+Future logoutUser() async {
+  //String url = 'http://10.0.2.2/api/login';
+  final _storage = FlutterSecureStorage();
+
+  String url =
+      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/logout';
+
+  Uri url2 = Uri.parse(url);
+  var token = await _storage.read(key: 'token');
+  final response =
+      await http.post(url2, headers: {'Authorization': 'Bearer $token'});
+  var convertedDatatoJson = jsonDecode(response.body);
+  var Ntoken = await _storage.write(key: 'token', value: '');
+  //return convertedDatatoJson;
+}
+
+Future SubmitData(List candidates, String? pos) async {
   // print(users);
   final _storage = FlutterSecureStorage();
   // String url = 'http://10.0.2.2/api/votes';
   String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/votes';
 
   Uri url2 = Uri.parse(url);
-  var nb = users.length;
+  var nb = candidates.length;
   var token = await _storage.read(key: 'token');
-  var precint = await _storage.read(key: 'precint');
-  var elpos = await _storage.read(key: 'position');
+  var precint = await _storage.read(key: 'pcode');
+  // var elpos = await _storage.read(key: 'position');
   String? level = "National";
   //print('Token : ${token}');
 
   for (var i = 0; i < nb; i++) {
-    String? fName = users[i].firstName;
-    String? lName = users[i].lastName;
-    var botos = users[i].boto.toString();
+    if (candidates[i]['boto'] == null) {
+      candidates[i]['boto'] = 0;
+    }
+    String? fName = candidates[i]['firstname'];
+    String? lName = candidates[i]['lastname'];
+    String? botos = candidates[i]['boto'].toString();
 
     final Map<String, dynamic> activityData = {
       "firstname": fName,
       "lastname": lName,
-      "elect_position": elpos,
+      "elect_position": pos,
       "level": level,
       "precint_code": precint,
       "nb_votes": botos
     };
 
-    if (users[i].boto > 0) {
-      final response = await http.post(url2, headers: {'Authorization': 'Bearer $token'}, body: activityData);
+
+    if (candidates[i]['boto'] > 0) {
+      final response = await http.post(url2,
+          headers: {'Authorization': 'Bearer $token'}, body: activityData);
+
       var convertedDatatoJson = jsonDecode(response.body);
       // return convertedDatatoJson
     }
