@@ -44,6 +44,22 @@ Future registerUser(
   return convertedDatatoJson;
 }
 
+Future logoutUser() async {
+  //String url = 'http://10.0.2.2/api/login';
+  final _storage = FlutterSecureStorage();
+
+  String url =
+      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/logout';
+
+  Uri url2 = Uri.parse(url);
+  var token = await _storage.read(key: 'token');
+  final response =
+      await http.post(url2, headers: {'Authorization': 'Bearer $token'});
+  var convertedDatatoJson = jsonDecode(response.body);
+  var Ntoken = await _storage.write(key: 'token', value: '');
+  //return convertedDatatoJson;
+}
+
 Future SubmitData(List candidates, String? pos) async {
   // print(users);
   final _storage = FlutterSecureStorage();
@@ -60,9 +76,12 @@ Future SubmitData(List candidates, String? pos) async {
   //print('Token : ${token}');
 
   for (var i = 0; i < nb; i++) {
-    String? fName = candidates[i]['name'];
-    String? lName = "N/A";
-    var botos = candidates[i]['boto'].toString();
+    if (candidates[i]['boto'] == null) {
+      candidates[i]['boto'] = 0;
+    }
+    String? fName = candidates[i]['firstname'];
+    String? lName = candidates[i]['lastname'];
+    String? botos = candidates[i]['boto'].toString();
 
     final Map<String, dynamic> activityData = {
       "firstname": fName,

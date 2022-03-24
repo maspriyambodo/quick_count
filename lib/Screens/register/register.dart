@@ -3,6 +3,8 @@ import 'package:login_ui/Screens/login/login.dart';
 import 'package:login_ui/api.dart';
 import 'package:login_ui/components/background.dart';
 import 'package:flutter/services.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:login_ui/data/globalScaff.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -114,20 +116,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: RaisedButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          var email = emailController.text;
-                          var name = nameController.text;
-                          var password = passwordController.text;
-                          var cpass = cpassController.text;
+                        var results = await Connectivity().checkConnectivity();
 
-                          var rsp =
-                              await registerUser(email, password, cpass, name);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        } else {
-                          print(error);
+                        print(results);
+
+                        if (_formKey.currentState!.validate()) {
+                          if (results == ConnectivityResult.none) {
+                            final SnackBar snackBar = SnackBar(
+                                content:
+                                    Text("No Internet Connection Available"));
+                            snackbarKey.currentState?.showSnackBar(snackBar);
+                          } else {
+                            var email = emailController.text;
+                            var name = nameController.text;
+                            var password = passwordController.text;
+                            var cpass = cpassController.text;
+
+                            var rsp = await registerUser(
+                                email, password, cpass, name);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                          }
                         }
                       },
                       shape: RoundedRectangleBorder(
