@@ -9,6 +9,7 @@ import 'Screens/login/login.dart';
 import 'wrapper.dart';
 import 'page/editable_page.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -26,15 +27,29 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+      //    builder: (context, widget) => ResponsiveWrapper.builder(
+      //     child,
+      //     maxWidth: 1200,
+      //     minWidth: 480,
+      //     defaultScale: true,
+      //     breakpoints: [
+      //       ResponsiveBreakpoint.resize(480, name: MOBILE),
+      //       ResponsiveBreakpoint.autoScale(800, name: TABLET),
+      //       ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+      //     ],
+      //     background: Container(color: Color(0xFFF5F5F5))),
+      // initialRoute: "/",
         title: 'Flutter Login',
         routes: {
           '/elect': (context) => ElectRtn(),
         },
+
         theme: ThemeData(
           primaryColor: Color(0xFF2661FA),
           scaffoldBackgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        
         home: Wrapper(),
       ),
     );

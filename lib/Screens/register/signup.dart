@@ -162,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Container(
               padding: EdgeInsets.fromLTRB(0, 20, 0, 40),
               child: FlatButton(
-                padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                padding: EdgeInsets.fromLTRB(110, 10, 110, 10),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                 color: Color.fromRGBO(207, 10, 10, 1),
                 onPressed: () {},

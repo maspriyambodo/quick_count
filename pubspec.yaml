@@ -39,6 +39,8 @@ dependencies:
   flutter_secure_storage_web: ^1.0.2
   font_awesome_flutter: ^9.0.0
   google_fonts: ^2.0.0
+  responsive_framework: ^0.1.4
+
 
 
 
