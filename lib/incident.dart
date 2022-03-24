@@ -44,13 +44,7 @@ class _IncedentReportState extends State<IncedentReport> {
       var data = new Map<String, dynamic>.from(rsp['data']);
       setState(() {
         _show = true;
-        message = data['barangay'] +
-            " " +
-            data['municipality'] +
-            " " +
-            data['province'] +
-            " " +
-            data['region'];
+        message = data['barangay'] + " " + data['municipality'] + " " + data['province'] + " " + data['region'];
       });
     } else {
       setState(() {
@@ -98,15 +92,11 @@ class _IncedentReportState extends State<IncedentReport> {
                       child: Container(
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.all(0.0),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                        margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                         child: TextFormField(
-                          validator: (String? val) =>
-                              val!.isEmpty ? 'Please enter password' : null,
+                          validator: (String? val) => val!.isEmpty ? 'Please enter password' : null,
                           decoration: InputDecoration(labelText: "Precint"),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textInputAction: TextInputAction.search,
                           controller: precintController,
                           onFieldSubmitted: (value) async {
@@ -131,8 +121,7 @@ class _IncedentReportState extends State<IncedentReport> {
               Container(
                 child: Text(
                   message,
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 20, 20, 20), fontSize: 14.0),
+                  style: TextStyle(color: Color.fromARGB(255, 20, 20, 20), fontSize: 14.0),
                 ),
               ),
               Container(
@@ -143,9 +132,7 @@ class _IncedentReportState extends State<IncedentReport> {
                   child: TextFormField(
                     controller: _controller,
                     readOnly: true,
-                    decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Incident Reference Number'),
+                    decoration: InputDecoration(border: UnderlineInputBorder(), labelText: 'Incident Reference Number'),
                   ),
                 ),
               ),
@@ -157,8 +144,7 @@ class _IncedentReportState extends State<IncedentReport> {
                     child: TextFormField(
                       keyboardType: TextInputType.multiline,
                       maxLines: 5,
-                      decoration: InputDecoration(
-                          border: UnderlineInputBorder(), labelText: 'Details'),
+                      decoration: InputDecoration(border: UnderlineInputBorder(), labelText: 'Details'),
                     ),
                   )),
               Visibility(

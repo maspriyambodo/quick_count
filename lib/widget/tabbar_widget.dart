@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TabBarWidget extends StatelessWidget {
-  
   final String title;
   final List<Tab> tabs;
   final List<Widget> children;
-  
-    
+
   const TabBarWidget({
     Key? key,
     required this.title,
     required this.tabs,
     required this.children,
   }) : super(key: key);
- 
 
   @override
   Widget build(BuildContext context) => DefaultTabController(

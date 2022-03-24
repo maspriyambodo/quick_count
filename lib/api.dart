@@ -10,24 +10,20 @@ import 'package:login_ui/page/completepage.dart';
 Future loginUser(String email, String password) async {
   //String url = 'http://10.0.2.2/api/login';
 
-  String url =
-      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/login';
+  String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/login';
 
   Uri url2 = Uri.parse(url);
   var device = "samsung";
   final response = await http.post(url2,
-      headers: {"Accept": "Application/json"},
-      body: {'email': email, 'password': password, 'device_name': device});
+      headers: {"Accept": "Application/json"}, body: {'email': email, 'password': password, 'device_name': device});
   var convertedDatatoJson = jsonDecode(response.body);
   return convertedDatatoJson;
 }
 
-Future registerUser(
-    String email, String password, String confirm_password, String name) async {
+Future registerUser(String email, String password, String confirm_password, String name) async {
   //String url = 'http://10.0.2.2/api/login';
 
-  String url =
-      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/register';
+  String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/register';
 
   Uri url2 = Uri.parse(url);
   var device = "samsung";
@@ -64,8 +60,7 @@ Future SubmitData(List candidates, String? pos) async {
   // print(users);
   final _storage = FlutterSecureStorage();
   // String url = 'http://10.0.2.2/api/votes';
-  String url =
-      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/votes';
+  String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/votes';
 
   Uri url2 = Uri.parse(url);
   var nb = candidates.length;
@@ -92,9 +87,11 @@ Future SubmitData(List candidates, String? pos) async {
       "nb_votes": botos
     };
 
+
     if (candidates[i]['boto'] > 0) {
       final response = await http.post(url2,
           headers: {'Authorization': 'Bearer $token'}, body: activityData);
+
       var convertedDatatoJson = jsonDecode(response.body);
       // return convertedDatatoJson
     }
@@ -107,8 +104,7 @@ Future SubmitData(List candidates, String? pos) async {
 Future fetchPrecint(String precint_code) async {
   final _storage = FlutterSecureStorage();
 
-  String url =
-      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/precints';
+  String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/precints';
 
   String sUrl = url + '/' + precint_code;
   print(sUrl);
@@ -129,8 +125,7 @@ Future fetchPrecint(String precint_code) async {
 Future fetchCandidates() async {
   final _storage = FlutterSecureStorage();
 
-  String url =
-      'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/candidates';
+  String url = 'http://qkapi-1130225346.ap-southeast-1.elb.amazonaws.com/api/candidates';
 
   Uri url2 = Uri.parse(url);
   var token = await _storage.read(key: 'token');

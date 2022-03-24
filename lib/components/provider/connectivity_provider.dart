@@ -44,8 +44,7 @@ class ConnectivityProvider with ChangeNotifier {
   Future<bool> _updateConnectionStatus() async {
     bool isConnected = true;
     try {
-      final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
+      final List<InternetAddress> result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isConnected = true;
       }
