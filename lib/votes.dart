@@ -30,10 +30,7 @@ class _VotesInState extends State<VotesIn> {
   }
 
   List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Text('Candidate')),
-      DataColumn(label: Text('# Votes'))
-    ];
+    return [DataColumn(label: Text('Candidate')), DataColumn(label: Text('# Votes'))];
   }
 
   List<DataRow> _createRows() {
@@ -49,9 +46,8 @@ class _VotesInState extends State<VotesIn> {
   }
 
   DataCell _createTitleCell(voteTitle) {
-    return DataCell(_isEditMode == true
-        ? TextFormField(initialValue: voteTitle, style: TextStyle(fontSize: 16))
-        : Text(voteTitle));
+    return DataCell(
+        _isEditMode == true ? TextFormField(initialValue: voteTitle, style: TextStyle(fontSize: 16)) : Text(voteTitle));
   }
 
   Row _createCheckboxField() {
@@ -77,12 +73,10 @@ Row _SaveData() {
       ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(60.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60.0)),
           padding: const EdgeInsets.all(0),
         ),
-        onPressed: () {
-        },
+        onPressed: () {},
         child: Text(
           "Save",
           style: TextStyle(fontSize: 16, color: Colors.white),

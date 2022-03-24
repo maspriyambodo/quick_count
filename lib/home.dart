@@ -21,18 +21,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void _handleLogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('userId');
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   void _electReturn() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ElectRtn()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ElectRtn()));
   }
 
   void _incidentReturn() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => IncedentReport()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => IncedentReport()));
   }
 
   @override
@@ -51,14 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: TextButton(
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                     overlayColor: MaterialStateProperty.resolveWith<Color?>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered))
-                          return Colors.blue.withOpacity(0.04);
-                        if (states.contains(MaterialState.focused) ||
-                            states.contains(MaterialState.pressed))
+                        if (states.contains(MaterialState.hovered)) return Colors.blue.withOpacity(0.04);
+                        if (states.contains(MaterialState.focused) || states.contains(MaterialState.pressed))
                           return Colors.blue.withOpacity(0.12);
                         return null; // Defer to the widget's default.
                       },
@@ -78,14 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     //        borderRadius: BorderRadius.zero,
                     //        side: BorderSide(color: Colors.blueAccent),
                     //      )),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                     overlayColor: MaterialStateProperty.resolveWith<Color?>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered))
-                          return Colors.blue.withOpacity(0.04);
-                        if (states.contains(MaterialState.focused) ||
-                            states.contains(MaterialState.pressed))
+                        if (states.contains(MaterialState.hovered)) return Colors.blue.withOpacity(0.04);
+                        if (states.contains(MaterialState.focused) || states.contains(MaterialState.pressed))
                           return Colors.blue.withOpacity(0.12);
                         return null; // Defer to the widget's default.
                       },

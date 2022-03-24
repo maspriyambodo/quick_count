@@ -50,10 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Text(
                       "REGISTER",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF2661FA),
-                          fontSize: 36),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2661FA), fontSize: 36),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -63,8 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
                       controller: nameController,
-                      validator: (String? val) =>
-                          val!.isEmpty ? 'Please Enter Name' : null,
+                      validator: (String? val) => val!.isEmpty ? 'Please Enter Name' : null,
                       decoration: InputDecoration(labelText: "Name"),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
@@ -77,8 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
                       controller: emailController,
-                      validator: (String? val) =>
-                          val!.isEmpty ? 'Email cannot be Empty' : null,
+                      validator: (String? val) => val!.isEmpty ? 'Email cannot be Empty' : null,
                       decoration: InputDecoration(labelText: "Email"),
                     ),
                   ),
@@ -88,8 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
                       controller: passwordController,
-                      validator: (String? val) =>
-                          val!.isEmpty ? 'Password Cannot be Empty' : null,
+                      validator: (String? val) => val!.isEmpty ? 'Password Cannot be Empty' : null,
                       decoration: InputDecoration(labelText: "Password"),
                       obscureText: true,
                     ),
@@ -100,11 +94,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
                       controller: cpassController,
-                      validator: (String? val) => val != passwordController.text
-                          ? 'Password Did not Match'
-                          : null,
-                      decoration:
-                          InputDecoration(labelText: "Confirm Password"),
+                      validator: (String? val) => val != passwordController.text ? 'Password Did not Match' : null,
+                      decoration: InputDecoration(labelText: "Confirm Password"),
                       obscureText: true,
                     ),
                   ),
@@ -120,18 +111,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           var password = passwordController.text;
                           var cpass = cpassController.text;
 
-                          var rsp =
-                              await registerUser(email, password, cpass, name);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                          var rsp = await registerUser(email, password, cpass, name);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                         } else {
                           print(error);
                         }
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.0)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(0),
                       child: Container(
@@ -140,10 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: size.width * 0.5,
                         decoration: new BoxDecoration(
                             borderRadius: BorderRadius.circular(80.0),
-                            gradient: new LinearGradient(colors: [
-                              Color.fromARGB(255, 255, 136, 34),
-                              Color.fromARGB(255, 255, 177, 41)
-                            ])),
+                            gradient: new LinearGradient(
+                                colors: [Color.fromARGB(255, 255, 136, 34), Color.fromARGB(255, 255, 177, 41)])),
                         padding: const EdgeInsets.all(0),
                         child: Text(
                           "SIGN UP",
@@ -157,18 +141,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: GestureDetector(
-                      onTap: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()))
-                      },
+                      onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))},
                       child: Text(
                         "Already Have an Account? Sign in",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF2661FA)),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF2661FA)),
                       ),
                     ),
                   )

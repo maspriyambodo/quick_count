@@ -3,6 +3,9 @@ import 'package:login_ui/widget/connectivityAlert.dart';
 import 'Screens/login/login.dart';
 import 'components/provider/connectivity_provider.dart';
 import 'package:provider/provider.dart';
+import 'Screens/login/signin.dart';
+import 'Screens/login/welcome.dart';
+import 'Screens/register/signup.dart';
 
 class Wrapper extends StatefulWidget {
   Wrapper({Key? key}) : super(key: key);
@@ -27,7 +30,7 @@ class _WrapperState extends State<Wrapper> {
   Widget pageUI() {
     return Consumer<ConnectivityProvider>(builder: (context, model, child) {
       if (model.isOnline != null) {
-        return model.isOnline ? LoginScreen() : ConnectivityAlert();
+        return model.isOnline ? SignupScreen() : ConnectivityAlert();
       }
 
       return Container(

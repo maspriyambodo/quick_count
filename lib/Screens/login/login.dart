@@ -51,10 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
                     child: Text(
                       "",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF2661FA),
-                          fontSize: 24),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2661FA), fontSize: 24),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -63,8 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
-                      validator: (String? val) =>
-                          val!.isEmpty ? 'Please enter email' : null,
+                      validator: (String? val) => val!.isEmpty ? 'Please enter email' : null,
                       decoration: InputDecoration(labelText: "Username"),
                       controller: emailController,
                     ),
@@ -74,8 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextFormField(
-                      validator: (String? val) =>
-                          val!.isEmpty ? 'Please enter password' : null,
+                      validator: (String? val) => val!.isEmpty ? 'Please enter password' : null,
                       decoration: InputDecoration(labelText: "Password"),
                       controller: passwordController,
                       obscureText: true,
@@ -92,9 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: Text(
                       error,
-                      style: TextStyle(
-                          color: Color.fromRGBO(216, 181, 58, 1.0),
-                          fontSize: 14.0),
+                      style: TextStyle(color: Color.fromRGBO(216, 181, 58, 1.0), fontSize: 14.0),
                     ),
                   ),
                   SizedBox(height: size.height * 0.035),
@@ -106,8 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         primary: Colors.redAccent,
                         side: BorderSide(width: 3, color: Colors.brown),
                         elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(80.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                         padding: const EdgeInsets.all(0),
                       ),
                       onPressed: () async {
@@ -123,16 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (data["token"] != null) {
                             String _tokenValue = data["token"];
                             print(_tokenValue);
-                            await _storage.write(
-                                key: 'token', value: _tokenValue);
+                            await _storage.write(key: 'token', value: _tokenValue);
 
                             var token = await _storage.read(key: 'token');
                             print(token);
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ElectRtn()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ElectRtn()));
                           } else {
                             setState(() => error = 'Please supply valid email');
                           }
@@ -152,18 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: GestureDetector(
-                      onTap: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterScreen()))
-                      },
+                      onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()))},
                       child: Text(
                         "Don't Have an Account? Sign up",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF2661FA)),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF2661FA)),
                       ),
                     ),
                   )

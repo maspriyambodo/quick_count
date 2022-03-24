@@ -72,8 +72,7 @@ class _EditablePageState extends State<EditablePage> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   Navigator.of(context).pop();
-                                  Navigator.pushReplacementNamed(
-                                      context, '/elect');
+                                  Navigator.pushReplacementNamed(context, '/elect');
                                   //                    Navigator.of(context).pop();
                                   //                  Navigator.push(context,
                                   //                     MaterialPageRoute(builder: (context) =>  ElectRtn()));
