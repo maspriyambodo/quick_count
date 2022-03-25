@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:login_ui/Screens/register/register.dart';
+import 'package:login_ui/Screens/register/signup.dart';
 import 'package:login_ui/api.dart';
 import 'package:login_ui/candidates.dart';
 import 'package:login_ui/components/background.dart';
@@ -12,6 +13,7 @@ import 'package:login_ui/home.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:login_ui/data/globalScaff.dart';
 import 'package:login_ui/model/candidates.dart';
+import 'package:login_ui/page/editable_page.dart';
 import 'package:login_ui/widget/loading.dart';
 
 class SignScreen extends StatefulWidget {
@@ -220,7 +222,7 @@ class _SignScreenState extends State<SignScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      VotesCnt()),
+                                                      SignupScreen()),
                                               (Route<dynamic> route) => false,
                                             );
                                           } else {
