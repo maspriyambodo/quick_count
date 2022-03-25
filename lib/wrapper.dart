@@ -36,7 +36,7 @@ class _WrapperState extends State<Wrapper> {
   Widget pageUI() {
     return Consumer<ConnectivityProvider>(builder: (context, model, child) {
       if (model.isOnline != null) {
-        return model.isOnline ? IncidentScreen() : ConnectivityAlert();
+        return model.isOnline ? SignScreen() : ConnectivityAlert();
       }
 
       return Container(

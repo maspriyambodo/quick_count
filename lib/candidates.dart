@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_ui/Screens/login/login.dart';
+import 'package:login_ui/Screens/login/signin.dart';
 import 'package:login_ui/widget/loading.dart';
 import 'package:login_ui/widget/tabbar_widget.dart';
 import 'elect.dart';
@@ -36,30 +37,30 @@ class _VotesCntState extends State<VotesCnt> {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      var rsp = await fetchCandidates();
-      var data = rsp['data'];
+      // var rsp = await fetchCandidates();
+      // var data = rsp['data'];
 
-      for (var counter = 0; counter <= data.length - 1; counter++) {
-        data[counter]['boto'] = 0;
-        if (data[counter]['position'] == "PARTY LIST") {
-          data[counter]['lastname'] = 'potek';
-          data[counter]['firstname'] = data[counter]['name'];
-        } else {
-          var tempName = data[counter]['name'].split(',');
-          data[counter]['lastname'] = tempName[0];
-          data[counter]['firstname'] = tempName[1];
-        }
-        setState(() {
-          candidates.add(data[counter]);
-        });
-      }
-      setState(() {
-        filtercandidates = candidates;
-      });
+      // for (var counter = 0; counter <= data.length - 1; counter++) {
+      //   data[counter]['boto'] = 0;
+      //   if (data[counter]['position'] == "PARTY LIST") {
+      //     data[counter]['lastname'] = 'potek';
+      //     data[counter]['firstname'] = data[counter]['name'];
+      //   } else {
+      //     var tempName = data[counter]['name'].split(',');
+      //     data[counter]['lastname'] = tempName[0];
+      //     data[counter]['firstname'] = tempName[1];
+      //   }
+      //   setState(() {
+      //     candidates.add(data[counter]);
+      //   });
+      // }
+      // setState(() {
+      //   filtercandidates = candidates;
+      // });
 
-      filtercandidates = candidates
-          .where((candidate) => candidate['position'] == 'PRESIDENT')
-          .toList();
+      // filtercandidates = candidates
+      //     .where((candidate) => candidate['position'] == 'PRESIDENT')
+      //     .toList();
     });
   }
 
@@ -133,8 +134,7 @@ class _VotesCntState extends State<VotesCnt> {
 
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                          MaterialPageRoute(builder: (context) => SignScreen()),
                           (Route<dynamic> route) => false,
                         );
                       },
@@ -236,26 +236,26 @@ class _VotesCntState extends State<VotesCnt> {
                   DataCell(
                     ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: 250),
-                      child: Text(canditate['name']),
+                      // child: Text(canditate['name']),
                     ),
                   ),
                   DataCell(
                     ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: 50),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: ""),
-                        textAlign: TextAlign.center,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        onChanged: (val) {
-                          if (isNumeric(val)) {
-                            setState(() {
-                              canditate['boto'] = int.parse(val);
-                            });
-                          }
-                        },
-                      ),
+                      // child: TextField(
+                      //   decoration: InputDecoration(labelText: ""),
+                      //   textAlign: TextAlign.center,
+                      //   inputFormatters: [
+                      //     FilteringTextInputFormatter.digitsOnly
+                      //   ],
+                      //   onChanged: (val) {
+                      //     if (isNumeric(val)) {
+                      //       setState(() {
+                      //         canditate['boto'] = int.parse(val);
+                      //       });
+                      //     }
+                      //   },
+                      // ),
                     ),
                   ),
                 ],

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:login_ui/Screens/login/login.dart';
+import 'package:login_ui/Screens/login/signin.dart';
 import 'package:login_ui/candidates.dart';
 import 'package:login_ui/incident.dart';
 import 'package:login_ui/votes.dart';
@@ -102,8 +103,7 @@ class _ElectRtnState extends State<ElectRtn> {
 
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                          MaterialPageRoute(builder: (context) => SignScreen()),
                           (Route<dynamic> route) => false,
                         );
                       },
