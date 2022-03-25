@@ -134,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                             var rsp = await registerUser(
                                 email, password, cpass, name);
+                            print(rsp);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -1,4 +1,3 @@
-// import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:login_ui/components/provider/connectivity_provider.dart';
 import 'package:login_ui/elect.dart';
